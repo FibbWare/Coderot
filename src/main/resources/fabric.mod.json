@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "coderot",
+	"version": "${version}",
+	"name": "Coderot",
+	"description": "Slightly randomizes the math used in terrain generation.",
+	"authors": [
+		"FibbWare"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FibbWare/mc-coderot"
+	},
+	"license": "MIT",
+	"icon": "assets/coderot/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"fibbware.coderot.Coderot"
+		],
+		"client": [],
+		"preLaunch": [
+			"fibbware.coderot.CoderotPreLaunch"
+		]
+	},
+	"mixins": [
+		"coderot.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
