@@ -59,7 +59,9 @@ public class Coderot implements ModInitializer {
 			dispatcher.register(Commands.literal("coderot_disable")
 					.executes(context -> {
 						long period = Long.MAX_VALUE;
+						Rounder.SetRange(1, 1);
 						Rounder.SetPeriod(period);
+						Rounder.ResetMults();
 						context.getSource().sendSuccess(() -> Component.literal("Disabled coderot."), false);
 						return Command.SINGLE_SUCCESS;
 					}));

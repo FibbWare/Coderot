@@ -18,6 +18,14 @@ public class Rounder {
     static double max = 1;
     static long period = Long.MAX_VALUE;
 
+    public static void ResetMults() {
+        multAdd = 1.0;
+        multSub = 1.0;
+        multMul = 1.0;
+        multDiv = 1.0;
+        multRem = 1.0;
+    }
+
     public static void SetRange(double min, double max) {
         Rounder.min = min;
         Rounder.max = max;
