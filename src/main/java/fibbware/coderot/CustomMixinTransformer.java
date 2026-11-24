@@ -25,7 +25,7 @@ public class CustomMixinTransformer implements IMixinTransformer{
     @Override public List<String> reload(String mixinClass, ClassNode classNode) { return base.reload(mixinClass, classNode); }
     @Override public boolean computeFramesForClass(MixinEnvironment environment, String name, ClassNode classNode) { return base.computeFramesForClass(environment, name, classNode); }
     @Override public byte[] transformClass(MixinEnvironment environment, String name, byte[] classBytes) { return base.transformClass(environment, name, classBytes); }
-    @Override public boolean transformClass(MixinEnvironment environment, String name, ClassNode classNode) { return base.transformClass(environment, name, classNode); };
+    @Override public boolean transformClass(MixinEnvironment environment, String name, ClassNode classNode) { return base.transformClass(environment, name, classNode); }
     @Override public boolean couldTransformClass(MixinEnvironment environment, String name) { return base.couldTransformClass(environment, name); }
     @Override public byte[] generateClass(MixinEnvironment environment, String name) { return base.generateClass(environment, name); }
     @Override public boolean generateClass(MixinEnvironment environment, String name, ClassNode classNode) { return base.generateClass(environment, name, classNode); }
@@ -33,6 +33,9 @@ public class CustomMixinTransformer implements IMixinTransformer{
 
     @Override
     public byte[] transformClassBytes(String name, String transformedName, byte[] basicClass) {
+
+        String replacerClassName = "fibbware/coderot/MathModifier";
+
         byte[] bytes = base.transformClassBytes(name, transformedName, basicClass);
 
         if (!transformedName.startsWith("net.minecraft.world.level.levelgen")) {
@@ -59,7 +62,6 @@ public class CustomMixinTransformer implements IMixinTransformer{
             );
 
             if (blacklist.contains(fullName)) {
-                System.out.println("[coderot] skipping: " + fullName);
                 continue;
             }
 
@@ -84,7 +86,9 @@ public class CustomMixinTransformer implements IMixinTransformer{
                     continue;
 
                 String methodDescriptor = methodName.startsWith("d") ? "(DD)D" : "(FF)F";
-                method.instructions.set(insn, new MethodInsnNode(Opcodes.INVOKESTATIC, "fibbware/coderot/Rounder", methodName, methodDescriptor, false));
+
+                var newNode = new MethodInsnNode(Opcodes.INVOKESTATIC, replacerClassName, methodName, methodDescriptor, false);
+                method.instructions.set(insn, newNode);
 
                 // System.out.println("[coderot] corrupting: " + fullName);
             }
